@@ -1,6 +1,7 @@
 # Logistic_Shipments_Tracking_PowerBI
 This dashboard, titled In-Transit Orders, is designed to provide real-time visibility into logistics performance and shipment statuses. It focuses on tracking On-Time Delivery (OTD) metrics and delivery scoring across a variety of customer accounts and geographic routes.
 
+<img width="2000" height="1140" alt="image" src="https://github.com/user-attachments/assets/bd638044-8a96-4bc8-a08b-39f7adc59285" />
 
 Key Features
 1. Estimated Arrival Score Matrix

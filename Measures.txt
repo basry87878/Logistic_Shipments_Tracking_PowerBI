@@ -1,0 +1,76 @@
+Waiting at Customer
+SUM of Overnights
+Cust Overnight Count
+Avg Nights per Shipped Order
+Cost (SAR)
+Cost ($)
+Total Shipped Orders
+Overnight %
+Overnight Bucket
+
+
+Waiting at Customer = 
+COUNTROWS('Waiting at Customer')
+
+SUM of Overnights = 
+VAR TotalOvernights = SUM('This Month'[Overnights])
+RETURN
+    IF(TotalOvernights = 0, BLANK(), TotalOvernights)
+
+Cust Overnight Count = 
+CALCULATE(
+    COUNTROWS('This Month'),
+    'This Month'[Overnights] <> 0
+)
+
+Avg Nights per Shipped Order = 
+DIVIDE(
+    [SUM of Overnights],
+    [Total Shipped Orders]
+)
+
+Cost (SAR) = 
+VAR TotalCost = SUM('This Month'[Costs SAR])
+RETURN
+IF(
+    TotalCost = 0, 
+    BLANK(), 
+    TotalCost
+)
+
+Cost ($) = 
+VAR TotalCostUSD = SUM('This Month'[Costs $])
+RETURN
+IF(
+    TotalCostUSD = 0, 
+    BLANK(), 
+    TotalCostUSD
+)
+
+
+Total Shipped Orders = 
+VAR OrderCount = COUNTROWS('This Month')
+RETURN
+IF(
+    OrderCount = 0, 
+    BLANK(), 
+    OrderCount
+)
+
+Overnight % = 
+DIVIDE(
+    [Cust Overnight Count],
+    [Total Shipped Orders],
+    0
+)
+
+Overnight Bucket = 
+SWITCH(
+    TRUE(),
+    'Waiting at Customer'[Overnights] = 0, "0 Night",
+    'Waiting at Customer'[Overnights] = 1, "1 Night",
+    'Waiting at Customer'[Overnights] = 2, "2 Nights",
+    'Waiting at Customer'[Overnights] = 3, "3 Nights",
+    'Waiting at Customer'[Overnights] = 4, "4 Nights",
+    'Waiting at Customer'[Overnights] >= 5, "5+ Nights"
+)

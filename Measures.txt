@@ -8,6 +8,8 @@ Total Shipped Orders
 Overnight %
 Overnight Bucket
 
+Waiting_Trucks
+------------------
 
 Waiting at Customer = 
 COUNTROWS('Waiting at Customer')
@@ -73,4 +75,18 @@ SWITCH(
     'Waiting at Customer'[Overnights] = 3, "3 Nights",
     'Waiting at Customer'[Overnights] = 4, "4 Nights",
     'Waiting at Customer'[Overnights] >= 5, "5+ Nights"
+)
+
+---------------------------------
+Waiting_Trucks = 
+CALCULATE(
+    COUNTROWS('Overnight_Data'),
+    FILTER(
+        'Overnight_Data',
+        CONTAINSSTRING( LOWER('Overnight_Data'[Order Status]), "waiting" ) &&
+        (
+            CONTAINSSTRING( LOWER('Overnight_Data'[Order Status]), "offload" ) ||
+            CONTAINSSTRING( LOWER('Overnight_Data'[Order Status]), "customer" )
+        )
+    )
 )
